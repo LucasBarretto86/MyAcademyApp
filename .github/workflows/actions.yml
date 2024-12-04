@@ -1,0 +1,38 @@
+name: Actions
+
+on: push
+
+jobs:
+  Linters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+
+      - run: yarn install
+
+      - name: Run ESLINT
+        uses: sibiraj-s/action-eslint@v3
+        with:
+          working-dir: src
+          eslint-args: '--ignore-path=.gitignore --quiet'
+          extensions: 'js,jsx,ts,tsx'
+          annotations: true
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '23'
+
+      - run: yarn install
+
+      - name: Run JEST
+        run: yarn test a --ci --coverage
