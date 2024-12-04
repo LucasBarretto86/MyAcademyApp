@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "react-app",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "beforeSelfClosing": "always"
+      }
+    ],
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off"
+  }
+}
