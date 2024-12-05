@@ -1,18 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { AuthProvider } from './contexts/AuthContext'
 import reportWebVitals from './reportWebVitals'
 import AppRoutes from './routes/AppRoutes'
 
 import './index.css'
+import { SessionProvider } from './contexts/SessionContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <React.StrictMode>
-    <AuthProvider>
+    <SessionProvider>
       <AppRoutes />
-    </AuthProvider>
+    </SessionProvider>
   </React.StrictMode>
 )
 
