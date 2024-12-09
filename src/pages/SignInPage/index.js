@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../../contexts/SessionContext'
 import MainLayout from '../../layouts/MainLayout'
@@ -7,20 +7,18 @@ import Button from '../../components/common/Button'
 
 const SignInPage = () => {
   const [params, setParams] = useState({ email: '', password: '' })
-  const [error, setError] = useState(null)
-  const { signIn } = useSession()
+  const { signIn, session, error } = useSession()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      await signIn(params)
-      navigate('/')
-    } catch (error) {
-      setError(error.message)
-    }
+    await signIn(params)
   }
+
+  useEffect(() => {
+    if (session) navigate('/')
+  }, [navigate, session])
 
   return (
     <MainLayout>

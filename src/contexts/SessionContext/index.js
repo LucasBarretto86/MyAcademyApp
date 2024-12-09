@@ -6,23 +6,33 @@ const SessionContext = createContext()
 export const SessionProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token') || null)
   const [session, setSession] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const signIn = useCallback(async (credentials) => {
-    const response = await fetch(apiURL + '/sign-in', {
-      method: 'post',
-      headers: headers(),
-      body: JSON.stringify({ session: credentials })
-    })
+    setLoading(true)
+    setError(null)
 
-    if (response.ok) {
-      const data = await response.json()
-      setToken(data.token)
-      setSession(data.session)
-      localStorage.setItem('token', data.token)
-    } else {
-      const data = await response.json()
+    try {
+      const response = await fetch(apiURL + '/sign-in', {
+        method: 'post',
+        headers: headers(),
+        body: JSON.stringify({ session: credentials })
+      })
 
-      throw new Error(data.error.message || 'Failed to Sign-in')
+      const { error, token, session } = await response.json()
+
+      if (error) {
+        setError(error.message)
+      } else {
+        setToken(token)
+        setSession(session)
+        localStorage.setItem('token', token)
+      }
+    } catch (error) {
+      setError(error?.message || 'Unknown authentication error')
+    } finally {
+      setLoading(false)
     }
   }, [])
 
@@ -34,7 +44,7 @@ export const SessionProvider = ({ children }) => {
 
   const user = useMemo(() => (session?.user), [session])
 
-  const value = useMemo(() => ({ token, session, user, signIn, signOut }), [token, session, user, signIn, signOut])
+  const value = useMemo(() => ({ token, session, user, loading, error, signIn, signOut }), [token, session, user, loading, error, signIn, signOut])
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
 }

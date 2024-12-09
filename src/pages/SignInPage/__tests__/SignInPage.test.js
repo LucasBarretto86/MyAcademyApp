@@ -55,8 +55,6 @@ describe('SignInPage', () => {
   })
 
   it('displays an error message on failed sign-in', async () => {
-    mockSignIn.mockRejectedValueOnce(new Error('Invalid credentials'))
-
     render(
       <BrowserRouter>
         <SignInPage />
@@ -72,7 +70,7 @@ describe('SignInPage', () => {
     fireEvent.click(screen.getByText('Sign in'))
 
     await waitFor(() =>
-      expect(screen.getByText('Invalid credentials')).toBeInTheDocument()
+      expect(screen.getByText('Email and/or Password invalid')).toBeInTheDocument()
     )
     expect(mockSignIn).toHaveBeenCalledWith({
       email: 'wrong@example.com',
