@@ -74,7 +74,6 @@ describe('SignInPage', () => {
     await waitFor(() =>
       expect(screen.getByText('Invalid credentials')).toBeInTheDocument()
     )
-
     expect(mockSignIn).toHaveBeenCalledWith({
       email: 'wrong@example.com',
       password: 'wrongpassword'

@@ -17,3 +17,8 @@ beforeEach(() => {
 afterEach(() => {
   document.body.innerHTML = ''
 })
+
+
+process.on('unhandledRejection', (err) => {
+  throw err
+})
