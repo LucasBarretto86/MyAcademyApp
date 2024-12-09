@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSession } from '../../contexts/SessionContext'
+import { useRegistration } from '../../hooks/useRegistration'
 import MainLayout from '../../layouts/MainLayout'
 import InputField from '../../components/forms/InputField'
 import Button from '../../components/common/Button'
 
-const SignInPage = () => {
-  const [params, setParams] = useState({ email: '', password: '' })
-  const { signIn, session, error } = useSession()
+const SignUpPage = () => {
+  const [params, setParams] = useState({ email: '', password: '', password_confirmation: '' })
+  const [errors, setErrors] = useState(null)
+  const { signUp, error } = useRegistration()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await signIn(params)
-  }
+    const { errors } = await signUp(params)
 
-  useEffect(() => {
-    if (session) navigate('/')
-  }, [navigate, session])
+    if (errors) {
+      setErrors(errors)
+    } else {
+      navigate('/sign-in')
+    }
+  }
 
   return (
     <MainLayout>
@@ -27,6 +30,7 @@ const SignInPage = () => {
           type="text"
           placeholder="E.g. example@example.com"
           value={params.email}
+          error={errors?.email?.[0]}
           required={true}
           onChange={(e) => setParams({ ...params, email: e.target.value })}
         />
@@ -35,14 +39,23 @@ const SignInPage = () => {
           type="password"
           placeholder="Entry your password"
           value={params.password}
+          error={errors?.password?.[0]}
           required={true}
           onChange={(e) => setParams({ ...params, password: e.target.value })}
         />
 
+        <InputField
+          type="password"
+          placeholder="Repeat your password"
+          value={params.password_confirmation}
+          error={errors?.password_confirmation?.[0]}
+          required={true}
+          onChange={(e) => setParams({ ...params, password_confirmation: e.target.value })}
+        />
 
         {error && <p className="error-message"><small>{error}</small></p>}
 
-        <p><small>New around here? <a href="/sign-up">Get yourself a login!</a></small></p>
+        <p><small>Already have an account? <a href="/sign-in">Login yourself, pal!</a></small></p>
 
         <Button type="submit" style={{ marginTop: '2rem' }} onClick={handleSubmit}>Sign in</Button>
       </form>
@@ -50,4 +63,4 @@ const SignInPage = () => {
   )
 }
 
-export default SignInPage
+export default SignUpPage
