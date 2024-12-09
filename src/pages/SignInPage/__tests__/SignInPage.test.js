@@ -4,22 +4,16 @@ import { BrowserRouter, useNavigate } from 'react-router-dom'
 import { useSession } from '../../../contexts/SessionContext'
 import SignInPage from '../index'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: jest.fn()
-}))
+jest.mock('react-router-dom', () => ({ ...jest.requireActual('react-router-dom'), useNavigate: jest.fn() }))
+jest.mock('../../../contexts/SessionContext', () => ({ useSession: jest.fn() }))
 
-jest.mock('../../../contexts/SessionContext', () => ({
-  useSession: jest.fn()
-}))
 describe('SignInPage', () => {
   const mockSignIn = jest.fn()
   const mockNavigate = jest.fn()
 
   beforeEach(() => {
-    useSession.mockReturnValue({
-      signIn: mockSignIn
-    })
+    jest.clearAllMocks()
+    useSession.mockReturnValue({ signIn: mockSignIn })
     useNavigate.mockReturnValue(mockNavigate)
   })
 
