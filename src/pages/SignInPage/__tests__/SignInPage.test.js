@@ -1,23 +1,22 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { BrowserRouter, useNavigate } from 'react-router-dom'
 import { useSession } from '../../../contexts/SessionContext'
+import { BrowserRouter, useNavigate } from 'react-router-dom'
 import SignInPage from '../index'
 
 jest.mock('react-router-dom', () => ({ ...jest.requireActual('react-router-dom'), useNavigate: jest.fn() }))
 jest.mock('../../../contexts/SessionContext', () => ({ useSession: jest.fn() }))
 
 describe('SignInPage', () => {
-  const mockSignIn = jest.fn()
   const mockNavigate = jest.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
-    useSession.mockReturnValue({ signIn: mockSignIn })
     useNavigate.mockReturnValue(mockNavigate)
   })
 
-  it('renders input fields and button', () => {
+  it('renders the sign in form correctly', () => {
+    useSession.mockReturnValue({ signIn: jest.fn(), session: null, error: null })
+
     render(
       <BrowserRouter>
         <SignInPage />
@@ -26,11 +25,12 @@ describe('SignInPage', () => {
 
     expect(screen.getByPlaceholderText('E.g. example@example.com')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Entry your password')).toBeInTheDocument()
-    expect(screen.getByText('Sign in')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument()
   })
 
-  it('submits the form successfully', async () => {
-    mockSignIn.mockResolvedValueOnce()
+  it('handles sign in form submission', async () => {
+    const mockSignIn = jest.fn()
+    useSession.mockReturnValue({ signIn: mockSignIn, session: null, error: null })
 
     render(
       <BrowserRouter>
@@ -44,17 +44,19 @@ describe('SignInPage', () => {
     fireEvent.change(screen.getByPlaceholderText('Entry your password'), {
       target: { value: 'password123' }
     })
-    fireEvent.click(screen.getByText('Sign in'))
+
+    fireEvent.click(screen.getByRole('button', { name: /sign in/i }))
 
     await waitFor(() => expect(mockSignIn).toHaveBeenCalledWith({
       email: 'test@example.com',
       password: 'password123'
     }))
-
-    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/'))
   })
 
-  it('displays an error message on failed sign-in', async () => {
+  it('displays an error message if sign in fails', async () => {
+    const mockSignIn = jest.fn()
+    useSession.mockReturnValue({ signIn: mockSignIn, session: null, error: 'Invalid credentials' })
+
     render(
       <BrowserRouter>
         <SignInPage />
@@ -62,20 +64,29 @@ describe('SignInPage', () => {
     )
 
     fireEvent.change(screen.getByPlaceholderText('E.g. example@example.com'), {
-      target: { value: 'wrong@example.com' }
+      target: { value: 'test@example.com' }
     })
     fireEvent.change(screen.getByPlaceholderText('Entry your password'), {
       target: { value: 'wrongpassword' }
     })
-    fireEvent.click(screen.getByText('Sign in'))
 
-    await waitFor(() =>
-      expect(screen.getByText('Email and/or Password invalid')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: /sign in/i }))
+
+    await waitFor(() => expect(screen.getByText('Invalid credentials')).toBeInTheDocument())
+  })
+
+  it('redirects to the home page if session exists', async () => {
+    const mockSignIn = jest.fn()
+    useSession.mockReturnValue({ signIn: mockSignIn, session: { 'user': { 'id': 1, 'name': 'Test User' } }, error: null })
+
+    render(
+      <BrowserRouter>
+        <SignInPage />
+      </BrowserRouter>
     )
-    expect(mockSignIn).toHaveBeenCalledWith({
-      email: 'wrong@example.com',
-      password: 'wrongpassword'
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/')
     })
-    expect(mockNavigate).not.toHaveBeenCalled()
   })
 })

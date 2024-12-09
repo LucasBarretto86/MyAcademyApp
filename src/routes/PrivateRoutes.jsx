@@ -4,7 +4,6 @@ import { useSession } from '../contexts/SessionContext'
 
 const PrivateRoutes = () => {
   const { token } = useSession()
-  console.log(token)
 
   return (token ? <Outlet /> : <Navigate to="/sign-in" replace />)
 }
