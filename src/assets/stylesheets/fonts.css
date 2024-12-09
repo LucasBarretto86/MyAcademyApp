@@ -1,0 +1,117 @@
+@font-face {
+  font-family: "Manjari";
+  src: url("../fonts/Manjari-Bold.woff2") format("woff2"),
+  url("../fonts/Manjari-Bold.woff") format("woff"),
+  url("../fonts/Manjari-Bold.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Manjari";
+  src: url("../fonts/Manjari-Regular.woff2") format("woff2"),
+  url("../fonts/Manjari-Regular.woff") format("woff"),
+  url("../fonts/Manjari-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Manjari";
+  src: url("../fonts/Manjari-Thin.woff2") format("woff2"),
+  url("../fonts/Manjari-Thin.woff") format("woff"),
+  url("../fonts/Manjari-Thin.ttf") format("truetype");
+
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Indie Flower";
+  src: url("../fonts/IndieFlower-Regular.ttf") format("woff2"),
+  url("../fonts/IndieFlower-Regular.ttf") format("woff"),
+  url("../fonts/IndieFlower-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Bold.woff2") format("woff2"),
+  url("../fonts/OpenSans-Bold.woff") format("woff"),
+  url("../fonts/OpenSans-Bold.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-ExtraBold.woff2") format("woff2"),
+  url("../fonts/OpenSans-ExtraBold.woff") format("woff"),
+  url("../fonts/OpenSans-ExtraBold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Regular.woff2") format("woff2"),
+  url("../fonts/OpenSans-Regular.woff") format("woff"),
+  url("../fonts/OpenSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manjari";
+  src: url("../fonts/Manjari-Bold.woff2") format("woff2"),
+  url("../fonts/Manjari-Bold.woff") format("woff"),
+  url("../fonts/Manjari-Bold.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Manjari";
+  src: url("../fonts/Manjari-Regular.woff2") format("woff2"),
+  url("../fonts/Manjari-Regular.woff") format("woff"),
+  url("../fonts/Manjari-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Manjari";
+  src: url("../fonts/Manjari-Thin.woff2") format("woff2"),
+  url("../fonts/Manjari-Thin.woff") format("woff"),
+  url("../fonts/Manjari-Thin.ttf") format("truetype");
+
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Indie Flower";
+  src: url("../fonts/IndieFlower-Regular.woff2") format("woff2"),
+  url("../fonts/IndieFlower-Regular.woff") format("woff"),
+  url("../fonts/IndieFlower-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Bold.woff2") format("woff2"),
+  url("../fonts/OpenSans-Bold.woff") format("woff"),
+  url("../fonts/OpenSans-Bold.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-ExtraBold.woff2") format("woff2"),
+  url("../fonts/OpenSans-ExtraBold.woff") format("woff"),
+  url("../fonts/OpenSans-ExtraBold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Regular.woff2") format("woff2"),
+  url("../fonts/OpenSans-Regular.woff") format("woff"),
+  url("../fonts/OpenSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
