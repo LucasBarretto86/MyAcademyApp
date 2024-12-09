@@ -1,63 +1,106 @@
-import React, { useEffect } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import { SessionProvider, useSession } from '../index.js'
+import React from 'react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { SessionProvider, useSession } from '../index'
 
-// const mockedSignIn = jest.fn()
-// const mockedSignOut = jest.fn()
+global.fetch = jest.fn()
 
-beforeEach(() => {
-  localStorage.clear()
-  // useSession.mockReturnValue({ signIn: mockedSignIn, signOut: mockedSignOut })
-})
-
-const renderWithProviders = (ui) => {
-  return render(
-    <SessionProvider>{ui}</SessionProvider>
-  )
-}
-
-describe('SessionProvider', () => {
-  it('should call session and retrieve token in localStorage', () => {
-    localStorage.setItem('token', 'mockedToken')
-
-    const TestComponent = () => {
-      const { token } = useSession()
-      return <>{token}</>
-    }
-
-    renderWithProviders(<TestComponent />)
-
-    expect(screen.getByText('mockedToken')).toBeInTheDocument()
+describe('SessionContext', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    fetch.mockClear()
   })
 
-  it('should call signIn and set session in localStorage', async () => {
-    const TestComponent = () => {
-      const { signIn } = useSession()
+  const TestComponent = () => {
+    const { session, signIn, signOut, user, token } = useSession()
 
-      useEffect(() => {
-        signIn({ email: 'example@example.com', password: 'password' })
-      }, [signIn])
-      return <>Test Component</>
-    }
+    return (
+      <div>
+        <div data-testid="session">{JSON.stringify(session)}</div>
+        <div data-testid="user">{JSON.stringify(user)}</div>
+        <div data-testid="token">{token}</div>
+        <button onClick={() => signIn({ email: 'test@example.com', password: 'password' })}>Sign In</button>
+        <button onClick={signOut}>Sign Out</button>
+      </div>
+    )
+  }
 
-    renderWithProviders(<TestComponent />)
+  it('should provide session and token', () => {
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        token: 'test-token',
+        session: { user: { id: 1, name: 'Test User' } }
+      })
+    })
 
-    await waitFor(() => expect(localStorage.getItem('token')).toBe('mockedToken'))
+    render(
+      <SessionProvider>
+        <TestComponent />
+      </SessionProvider>
+    )
+
+    expect(screen.getByTestId('session').textContent).toBe('null')
+    expect(screen.getByTestId('token').textContent).toBe('')
+
+    fireEvent.click(screen.getByText('Sign In'))
+
+    waitFor(() => {
+      expect(screen.getByTestId('session').textContent).toBe(
+        '{"user":{"id":1,"name":"Test User"}}'
+      )
+      expect(screen.getByTestId('token').textContent).toBe('test-token')
+      expect(localStorage.getItem('token')).toBe('test-token')
+    })
   })
 
-  it('should call signOut and remove session from localStorage', async () => {
-    localStorage.setItem('token', 'mockedToken')
+  it('should handle sign-out', () => {
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        token: 'test-token',
+        session: { user: { id: 1, name: 'Test User' } }
+      })
+    })
 
-    const TestComponent = () => {
-      const { signOut } = useSession()
-      useEffect(() => {
-        signOut()
-      }, [signOut])
-      return <>Test Component</>
-    }
+    render(
+      <SessionProvider>
+        <TestComponent />
+      </SessionProvider>
+    )
 
-    renderWithProviders(<TestComponent />)
+    fireEvent.click(screen.getByText('Sign In'))
 
-    await waitFor(() => expect(localStorage.getItem('session')).toBeNull())
+    waitFor(() => {
+      expect(screen.getByTestId('session').textContent).toBe(
+        '{"user":{"id":1,"name":"Test User"}}'
+      )
+      expect(screen.getByTestId('token').textContent).toBe('test-token')
+      expect(localStorage.getItem('token')).toBe('test-token')
+    })
+
+    fireEvent.click(screen.getByText('Sign Out'))
+
+    expect(screen.getByTestId('session').textContent).toBe('null')
+    expect(screen.getByTestId('token').textContent).toBe('')
+    expect(localStorage.getItem('token')).toBe(null)
+  })
+
+  it('should throw error on failed sign-in', async () => {
+    fetch.mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ error: { message: 'Invalid credentials' } })
+    })
+
+    render(
+      <SessionProvider>
+        <TestComponent />
+      </SessionProvider>
+    )
+
+    fireEvent.click(screen.getByText('Sign In'))
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1))
+    expect(screen.getByTestId('session').textContent).toBe('null')
+    expect(screen.getByTestId('token').textContent).toBe('')
   })
 })
