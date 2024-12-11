@@ -12,7 +12,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        opsans: ['Open Sans'],
+        opensans: ['Open Sans'],
         manjari: ['Manjari'],
         indie: ['Indie Flower']
       },

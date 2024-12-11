@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import reportWebVitals from './reportWebVitals'
 import AppRoutes from './routes/AppRoutes'
 
-import './index.css'
+import './index.scss'
 import { SessionProvider } from './contexts/SessionContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
