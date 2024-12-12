@@ -10,9 +10,9 @@ const NavBar = () => {
         <img src={Logo} alt="my-academy-logo" className="h-[3rem] w-auto" />
       </a>
       <div className="flex gap-2 items-center text-marine font-bold">
-        <a href="/courses" className="hover:opacity-50 p-2">Courses</a>
-        <a href="/about" className="hover:opacity-50 p-2">About</a>
+        {/*<a href="/courses" className="hover:opacity-50 p-2">Courses</a>*/}
         <a href="/settings" className="hover:opacity-50 p-2">Settings</a>
+        <a href="/about" className="hover:opacity-50 p-2">About</a>
         <a href="/" onClick={signOut} className="hover:opacity-50 p-2">Sign Out</a>
       </div>
     </nav>

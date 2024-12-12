@@ -5,6 +5,7 @@ import SignUpPage from '../pages/SignUpPage'
 import SignInPage from '../pages/SignInPage'
 import HomePage from '../pages/HomePage'
 import CoursePage from '../pages/CoursePage'
+import AboutPage from '../pages/AboutPage'
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/course/:id" element={<CoursePage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>)

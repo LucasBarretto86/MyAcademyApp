@@ -18,9 +18,9 @@ const NavMenu = () => {
           <div className="absolute top-0 left-0 flex flex-col items-center gap-2 w-full h-dvh bg-white z-50 text-marine font-bold">
             <div className="flex flex-col items-center justify-between w-full p-4" style={{ height: 'calc(100dvh - 5rem)' }}>
               <div className="flex flex-col items-center gap-2 w-full">
-                <a href="/courses" className="flex items-center justify-center w-full hover:opacity-50 p-2">Courses</a>
-                <a href="/settings" className="flex items-center justify-center w-full hover:opacity-50 p-2">Settings</a>
+                {/*<a href="/courses" className="flex items-center justify-center w-full hover:opacity-50 p-2">Courses</a>*/}
                 <a href="/about" className="flex items-center justify-center w-full hover:opacity-50 p-2">About</a>
+                <a href="/settings" className="flex items-center justify-center w-full hover:opacity-50 p-2">Settings</a>
               </div>
 
               <div className="flex flex-col items-center gap-2 w-full">
