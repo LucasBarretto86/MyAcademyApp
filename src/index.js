@@ -5,14 +5,17 @@ import AppRoutes from './routes/AppRoutes'
 
 import './index.scss'
 import { SessionProvider } from './contexts/SessionContext'
+import { ModalProvider } from './contexts/ModalContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <React.StrictMode>
-    <SessionProvider>
-      <AppRoutes />
-    </SessionProvider>
+    <ModalProvider>
+      <SessionProvider>
+        <AppRoutes />
+      </SessionProvider>
+    </ModalProvider>
   </React.StrictMode>
 )
 

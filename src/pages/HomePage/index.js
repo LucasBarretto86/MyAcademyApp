@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PrivateLayout from '../../layouts/PrivateLayout'
-import { useCourse } from '../../hooks/courses/useCourse'
+import { useCourses } from '../../hooks/courses/useCourses'
 import CourseCard from '../../components/pages/CourseCard'
 import { isMobile } from '../../utils/device'
 
 const HomePage = () => {
   const [courses, setCourses] = useState([])
-  const { getCourses, error, loading } = useCourse()
+  const { getCourses, error, loading } = useCourses()
 
-  const handleGetCourses = useCallback(async () => {
+  const fetchCourses = useCallback(async () => {
     const data = await getCourses()
 
     if (!data.error) {
@@ -18,8 +18,8 @@ const HomePage = () => {
   }, [getCourses])
 
   useEffect(() => {
-    handleGetCourses()
-  }, [handleGetCourses])
+    fetchCourses()
+  }, [fetchCourses])
 
   return (<PrivateLayout>
     <div className="flex flex-col items-center gap-8 w-full">

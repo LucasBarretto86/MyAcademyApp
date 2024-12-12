@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSession } from '../../../contexts/SessionContext'
-import Logo from '../../../assets/images/logo.svg'
+import Logo from '../../../assets/./vectors/logo.svg'
 
 const NavBar = () => {
   const { signOut } = useSession()

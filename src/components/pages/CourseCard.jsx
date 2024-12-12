@@ -1,9 +1,16 @@
 import React from 'react'
-import Video from '../../assets/images/video.svg'
+import { useNavigate } from 'react-router-dom'
+import Video from '../../assets/./vectors/video.svg'
 
 const CourseCard = ({ id, title, description, lessons_count, cover }) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/course/${id}`)
+  }
+
   return (
-    <div onClick={(e) => (console.log(e.target))} className="flex flex-col cursor-pointer border border-gray-300 rounded-lg shadow-xl hover:opacity-75 z-10 h-full">
+    <div onClick={handleClick} className="flex flex-col cursor-pointer border border-gray-300 rounded-lg shadow-xl hover:opacity-75 z-10 h-full">
       <div className="course-card flex flex-col p-4 z-20 bg-white overflow-hidden rounded-lg h-full">
         <div className="flex justify-center items-center p-4"><img src={cover || Video} className="flex self-auto h-[10rem]" alt="thumbnail" /></div>
         <div className="flex flex-col h-full w-full gap-2">

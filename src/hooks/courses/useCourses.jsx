@@ -2,17 +2,17 @@ import { useCallback, useState } from 'react'
 import { apiURL, headers } from '../../utils/requests'
 import { useSession } from '../../contexts/SessionContext'
 
-export const useCourse = () => {
+export const useCourses = () => {
   const { token } = useSession()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const getCourse = useCallback(async (id) => {
+  const getCourses = useCallback(async () => {
     setLoading(true)
     setError(null)
 
     try {
-      const response = await fetch(apiURL + `/api/v1/courses/${id}`, {
+      const response = await fetch(apiURL + '/api/v1/courses', {
         method: 'get', headers: headers(token)
       })
 
@@ -26,7 +26,7 @@ export const useCourse = () => {
   }, [token])
 
   return {
-    getCourse, loading, error
+    getCourses, loading, error
   }
 }
 

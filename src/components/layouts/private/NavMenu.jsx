@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSession } from '../../../contexts/SessionContext'
 import Accordion from '../../common/Accordion'
-import Logo from '../../../assets/images/logo.svg'
-import Menu from '../../../assets/images/menu.svg'
+import Logo from '../../../assets/./vectors/logo.svg'
+import Menu from '../../../assets/./vectors/menu.svg'
 
 const NavMenu = () => {
   const { signOut } = useSession()
