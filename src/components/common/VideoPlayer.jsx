@@ -7,24 +7,21 @@ import { formatDuration } from '../../utils/formatters'
 
 const VideoPlayer = ({ videoSource }) => {
   const videoRef = useRef(null)
-  const progressBarRef = useRef(null)
-  const elapsedRef = useRef(null)
+  const progressRef = useRef(null)
+  const currentTimeRef = useRef(null)
   const durationRef = useRef(null)
+  const [video, setVideo] = useState(null)
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
-    const video = videoRef.current
-    if (video) {
-      video.play()
+    if (videoRef.current) {
+      videoRef.current.play()
       setPlaying(true)
-      elapsedRef.current.innerHTML = formatDuration(video.currentTime)
-      durationRef.current.innerHTML = formatDuration(video.duration || 0)
+      setVideo(videoRef.current)
     }
-  }, [videoRef])
+  }, [video, videoRef])
 
   const handlePlayPause = () => {
-    const video = videoRef.current
-
     if (playing) {
       setPlaying(false)
       video.pause()
@@ -35,51 +32,47 @@ const VideoPlayer = ({ videoSource }) => {
   }
 
   const handleFullscreen = () => {
-    const video = videoRef.current
-
     if (video.requestFullscreen) video.requestFullscreen()
   }
 
-  const handleVideoSkip = (e) => {
-    const video = videoRef.current
-
-    video.currentTime = ((e.target.value / 100) * video.duration)
+  const handlerProgress = () => {
+    video.currentTime = ((progressRef.current.value / 100) * video.duration)
   }
 
-  const handleProgressBar = () => {
-    const video = videoRef.current
-    const progressBar = progressBarRef.current
-
-    elapsedRef.current.innerHTML = formatDuration(video.currentTime)
+  const handleTrackers = () => {
+    currentTimeRef.current.innerHTML = formatDuration(video.currentTime)
     durationRef.current.innerHTML = formatDuration(video.duration)
-    progressBar.value = ((video.currentTime / video.duration) * 100)
+    progressRef.current.value = ((video.currentTime / video.duration) * 100)
   }
 
   return (
-    <div className="player">
-      <video className="source" ref={videoRef} data-playing={playing} onTimeUpdate={handleProgressBar} controls={false}>
-        <source src={videoSource} type="video/mp4" />
+    <div className="player" data-playing={playing}>
+      <video className="player-video" ref={videoRef} onTimeUpdate={handleTrackers} controls={false}>
+        <source className="player-video-source" src={videoSource} type="video/mp4" />
         This player is currently playing this video
       </video>
 
-      <div className="flex flex-col gap-1 mb-2">
+      <div className="player-tracker">
         <input
-          className="player-progressbar w-full"
+          className="player-tracker-progress"
           type="range"
-          ref={progressBarRef}
-          value={0}
-          onChange={handleVideoSkip}
+          ref={progressRef}
+          onChange={handlerProgress}
         />
-        <div className="player-controls flex self-end gap-2"><small><span ref={elapsedRef}></span>/<span ref={durationRef}></span></small></div>
+        <div className="player-tracker-duration"><span ref={currentTimeRef}></span>/<span ref={durationRef}></span></div>
       </div>
 
-      <div className="player-controls flex justify-between gap-2">
-        <div className="flex gap-2">
-          <div className="player-btn-play cursor-pointer" onClick={handlePlayPause}><img className="h-[2rem] w-auto" src={(playing ? PauseIcon : PlayIcon)} alt="play icon" /></div>
+      <div className="player-controls">
+        <div className="player-controls-block player-controls-left">
+          <div className="player-controls-control" onClick={handlePlayPause}>
+            <img className="player-controls-icon player-control-play" src={(playing ? PauseIcon : PlayIcon)} alt="play or pause icon" />
+          </div>
         </div>
 
-        <div className="flex gap-2">
-          <div className="player-btn-max cursor-pointer" onClick={handleFullscreen}><img className="h-[2rem] w-auto" src={FullScreenIcon} alt="fullscree icon" /></div>
+        <div className="player-controls-block player-controls-right">
+          <div className="player-control-control" onClick={handleFullscreen}>
+            <img className="player-controls-icon player-control-fullscreen" src={FullScreenIcon} alt="fullscreen icon" />
+          </div>
         </div>
       </div>
     </div>

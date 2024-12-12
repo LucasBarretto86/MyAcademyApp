@@ -9,7 +9,7 @@ const Lesson = ({ number, title, description }) => {
 
   return (
     <>
-      <div className="flex flex-col-reverse lg:flex-row justify-start lg:justify-between gap-4 lg:p-8 p-4">
+      <div className="flex flex-col-reverse lg:flex-row justify-start lg:justify-between gap-2 lg:p-8 p-5">
         <div className="flex flex-col gap-1">
           <h6 className="text-marine mb-2">Lesson:</h6>
           <p className="text-gray-400">{description}</p>

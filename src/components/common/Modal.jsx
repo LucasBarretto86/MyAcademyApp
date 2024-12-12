@@ -26,7 +26,7 @@ const Modal = ({ isOpen, onClose, heading = '', content, footer, loading, error 
             <div className="modal-close" onClick={handleClose}>{'\u00D7'}</div>
           </div>
 
-          <div className="model-body">
+          <div className="modal-body">
             {loading ? 'Loading...' : error ? <p className="error-message">{error}</p> : content || 'No content at this moment'}
           </div>
 

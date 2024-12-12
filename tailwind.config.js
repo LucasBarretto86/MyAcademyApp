@@ -35,7 +35,7 @@ module.exports = {
   plugins: [],
   safelist: [
     {
-      pattern: /(bg|border|text)-(graphite|icy|aegean|teal|marine)/
+      pattern: /(bg|border|text|fill|stroke)-(graphite|icy|aegean|teal|marine)/
     },
     {
       pattern: /(font)-(opsans|manjari|indie)/

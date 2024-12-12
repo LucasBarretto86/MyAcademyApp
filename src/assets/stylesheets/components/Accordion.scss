@@ -1,9 +1,4 @@
-details.accordion {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: fit-content;
-
+details {
   & + details {
     border-top: 1px solid rgba(0, 0, 0, 0.15);
   }
@@ -15,7 +10,6 @@ details.accordion {
   & > summary:hover,
   &[open] > summary {
     position: relative;
-    display: flex;
     content: '';
     top: 0;
     left: 0;
@@ -24,50 +18,77 @@ details.accordion {
     width: 100%;
     height: 100%;
   }
-}
 
-summary.trigger {
-  display: grid;
-  position: relative;
-  grid-template-columns: 1fr 2rem;
-  padding: 1rem;
-  list-style: none !important;
-  cursor: pointer;
-
-  & > ::-webkit-details-marker, ::marker {
-    appearance: none !important;
-    display: none !important;
-  }
-
-  & > .icon {
-    grid-column: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    content: '';
-    top: 50%;
-    left: auto;
-    right: 1rem;
-    bottom: 0;
-    width: 2rem;
-    height: 2rem;
-    transform: translate3d(0, -50%, 0);
-    font-size: 1.5rem;
+  &[open] .accordion-icon-default {
+    transform: rotate(180deg);
   }
 }
 
-h6.title {
-  position: relative;
+.accordion {
   display: flex;
-  grid-column: 1;
-  width: max-content;
+  flex-direction: column;
+  width: 100%;
   height: fit-content;
+
+  &-trigger {
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr 2rem;
+    padding: 1rem;
+    list-style: none !important;
+    cursor: pointer;
+    justify-content: space-between;
+
+    & > ::-webkit-details-marker, ::marker {
+      appearance: none !important;
+      display: none !important;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+
+      .accordion-icon-default {
+        stroke: var(--mya-teal)
+      }
+    }
+
+    &-icon {
+      grid-column: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: auto;
+      right: 1rem;
+      bottom: 0;
+      width: 2rem;
+      height: 2rem;
+      font-size: 2rem;
+      transform: translate3d(0, -50%, 0);
+
+      & > img,
+      & > svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &-heading {
+    position: relative;
+    display: flex;
+    grid-column: 1;
+    width: max-content;
+    height: fit-content;
+  }
+
+  &-body {
+    position: relative;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.10);
+    height: fit-content;
+  }
 }
 
-div.body {
-  position: relative;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: inset 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.10);
-  height: fit-content;
-}
