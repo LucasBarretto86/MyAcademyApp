@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import AboutPage from '../index'
 
+// eslint-disable-next-line react/display-name
 jest.mock('../../../layouts/PrivateLayout', () => ({ children }) => <div data-testid="private-layout">{children}</div>)
 
 describe('AboutPage', () => {

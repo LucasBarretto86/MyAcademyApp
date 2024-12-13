@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import SignUpPage from '../index'
 
 jest.mock('../../../hooks/useRegistration')
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: jest.fn()
-}))
+jest.mock('react-router-dom', () => ({ ...jest.requireActual('react-router-dom'), useNavigate: jest.fn() }))
 
 describe('SignUpPage', () => {
   const mockSignUp = jest.fn()
@@ -17,8 +14,7 @@ describe('SignUpPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     useRegistration.mockReturnValue({
-      signUp: mockSignUp,
-      error: null
+      signUp: mockSignUp, error: null
     })
     useNavigate.mockReturnValue(mockNavigate)
   })
@@ -51,9 +47,7 @@ describe('SignUpPage', () => {
 
     await waitFor(() => {
       expect(mockSignUp).toHaveBeenCalledWith({
-        email: 'test@example.com',
-        password: 'password123',
-        password_confirmation: 'password123'
+        email: 'test@example.com', password: 'password123', password_confirmation: 'password123'
       })
       expect(mockNavigate).toHaveBeenCalledWith('/sign-in')
     })
@@ -62,8 +56,7 @@ describe('SignUpPage', () => {
   test('displays validation errors on failed submission', async () => {
     mockSignUp.mockResolvedValueOnce({
       errors: {
-        email: ['Email is invalid'],
-        password: ['Password is too short']
+        email: ['Email is invalid'], password: ['Password is too short']
       }
     })
 
@@ -89,8 +82,7 @@ describe('SignUpPage', () => {
 
   test('displays general error message from hook', () => {
     useRegistration.mockReturnValue({
-      signUp: mockSignUp,
-      error: 'Something went wrong!'
+      signUp: mockSignUp, error: 'Something went wrong!'
     })
 
     render(<SignUpPage />)

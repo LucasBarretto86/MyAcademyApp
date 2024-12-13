@@ -5,6 +5,7 @@ import { useCourses } from '../../../hooks/courses/useCourses'
 import { MemoryRouter } from 'react-router-dom'
 
 jest.mock('../../../hooks/courses/useCourses')
+// eslint-disable-next-line react/display-name
 jest.mock('../../../layouts/PrivateLayout', () => ({ children }) => <div data-testid="private-layout">{children}</div>)
 
 describe('HomePage', () => {
