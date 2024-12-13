@@ -1,48 +1,35 @@
-import React, { useState } from 'react'
-import { render, fireEvent, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import { ModalProvider, useModal } from '../index'
-import TaskForm from '../../../pages/PrivatePages/TasksPage/components/TaskForm'
-import Modal from '../../../components/common/Modal'
+import React from 'react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { ModalProvider, useModal } from '../index';
+import Modal from '../../../components/common/Modal';
 
 const TestComponent = () => {
-  const { openModal, closeModal, modal } = useModal()
-  const [open, setOpen] = useState(false)
-
-  const testOpen = jest.fn(() => {
-    openModal()
-    setOpen(true)
-  })
-
-  const testClose = jest.fn(() => {
-    openModal()
-    setOpen(false)
-  })
+  const { openModal, closeModal } = useModal();
 
   return (
     <>
-      <button onClick={testOpen}>Open Modal</button>
-      <button onClick={testClose}>Close Modal</button>
-      <div id="modal-content">{open}</div>
+      <button onClick={openModal}>Open Modal</button>
+      <button onClick={closeModal}>Close Modal</button>
+      <Modal content="Modal content" />
     </>
-  )
-}
-test('opens and closes modal correctly', () => {
+  );
+};
+
+
+test('opens and closes modal correctly', async () => {
   render(
     <ModalProvider>
       <TestComponent />
     </ModalProvider>
-  )
+  );
 
-  const openButton = screen.getByText('Open Modal')
-  const closeButton = screen.getByText('Close Modal')
-  const modalContent = screen.getByText('false')
+  const openButton = screen.getByText('Open Modal');
+  const closeButton = screen.getByText('Close Modal');
+  const modalContainer = document.getElementById('modal');
 
-  expect(modalContent).toHaveTextContent('false')
+  fireEvent.click(openButton);
+  await waitFor(() => expect(modalContainer).toHaveAttribute('data-open', 'true'));
 
-  fireEvent.click(openButton)
-  expect(modalContent).toHaveTextContent('true')
-
-  fireEvent.click(closeButton)
-  expect(modalContent).toHaveTextContent('false')
-})
+  fireEvent.click(closeButton);
+  await waitFor(() => expect(modalContainer).toHaveAttribute('data-open', 'false'));
+});

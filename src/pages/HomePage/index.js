@@ -11,10 +11,9 @@ const HomePage = () => {
   const fetchCourses = useCallback(async () => {
     const data = await getCourses()
 
-    if (!data.error) {
+    if (!data?.error) {
       setCourses(data)
     }
-
   }, [getCourses])
 
   useEffect(() => {

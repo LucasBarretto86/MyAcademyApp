@@ -1,16 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import PrivateLayout from '../../layouts/PrivateLayout'
-import { useCourses } from '../../hooks/courses/useCourses'
-import CourseCard from '../../components/pages/CourseCard'
-import { isMobile } from '../../utils/device'
+
 
 const AboutPage = () => {
   return (
     <PrivateLayout>
-      <div className="flex flex-col items-center gap-8 w-full">
+      <div className="flex flex-col items-center gap-8 w-full p-8">
         <h3 className="w-full text-center text-marine">About</h3>
 
-        <div className="flex flex-col gap-4 w-full lg:text-left text-center">
+        <div className="flex flex-col gap-4 w-full lg:text-left text-center px-8">
           <h5>My Academy</h5>
 
           <p>Hello World!!</p>

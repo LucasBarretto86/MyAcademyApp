@@ -7,12 +7,7 @@ export const ModalProvider = ({ children }) => {
   const modal = useRef(document.getElementById('modal'))
 
   useEffect(() => {
-    if (open) {
-      modal.innerHTML = ''
-      modal.current.dataset.open = 'true'
-    } else {
-      modal.current.dataset.open = 'false'
-    }
+    modal.current.setAttribute('data-open', open)
   }, [open])
 
   const openModal = useCallback(() => {
@@ -21,7 +16,7 @@ export const ModalProvider = ({ children }) => {
 
   const closeModal = useCallback(() => {
     setOpen(false)
-    modal.current.dataset.open = 'false'
+    modal.innerHTML = ''
   }, [setOpen])
 
   return (

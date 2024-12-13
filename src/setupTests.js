@@ -5,13 +5,13 @@
 import '@testing-library/jest-dom'
 
 beforeEach(() => {
-  const modalsDiv = document.createElement('div')
-  modalsDiv.id = 'modals'
-  document.body.appendChild(modalsDiv)
+  const modal = document.createElement('div')
+  modal.id = 'modal'
+  document.body.appendChild(modal)
 
-  const rootDiv = document.createElement('div')
-  rootDiv.id = 'root'
-  document.body.appendChild(rootDiv)
+  const root = document.createElement('div')
+  root.id = 'root'
+  document.body.appendChild(root)
 })
 
 afterEach(() => {

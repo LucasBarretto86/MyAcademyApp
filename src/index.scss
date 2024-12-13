@@ -1,5 +1,5 @@
-@import "./assets/stylesheets/fonts.scss";
-@import "./assets/stylesheets/components.scss";
+@use "./assets/stylesheets/fonts.scss";
+@use "./assets/stylesheets/components.scss";
 
 @tailwind base;
 @tailwind components;
@@ -99,7 +99,8 @@ p {
 }
 
 strong, b {
-  font-weight: 700;
+  font-family: "Open Sans", 'Helvetica', 'Neue', 'Arial', serif;
+  font-weight: 600;
 }
 
 a, a:visited {

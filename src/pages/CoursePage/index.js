@@ -13,7 +13,7 @@ const CoursePage = () => {
   const fetchCourse = useCallback(async () => {
     const data = await getCourse(id)
 
-    if (!data.error) {
+    if (!data?.error) {
       setCourse(data)
     }
 
