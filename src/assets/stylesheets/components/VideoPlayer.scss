@@ -1,0 +1,56 @@
+.player {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &-video {
+    max-width: 40rem;
+    min-width: 18rem;
+    height: auto;
+  }
+  &-tracker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0.25rem 0;
+
+    &-progress,
+    &-duration {
+      width: 100%;
+    }
+
+    &-duration {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 1ch;
+    }
+  }
+
+  &-controls {
+    display: flex;
+    justify-content: space-between;
+
+    &-block {
+      display: flex;
+      column-gap: 0.5rem;
+    }
+
+    &-left {
+      justify-content: flex-start;
+    }
+
+    &-right {
+      justify-content: flex-end;
+    }
+
+    &-control {
+      cursor: pointer;
+    }
+
+    &-icon {
+      height: 2rem;
+      width: auto;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../assets/images/logo.svg'
+import Logo from '../assets/./vectors/logo.svg'
 
 const MainLayout = ({ children }) => {
   return (
