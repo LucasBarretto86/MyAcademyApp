@@ -29,7 +29,7 @@ const CoursePage = () => {
         {error && <p className="error-message">{error}</p>}
         {loading ? (<p>Loading...</p>) : (course && <>
           <h4 className="text-marine p-[1rem] text-center lg:text-left">{course.title}</h4>
-          <div>
+          <div className=" lg:mx-0 mx-[-1rem]">
             {course.lessons.length > 0 && course.lessons.map((lesson) => (
               <Accordion
                 key={lesson.id}
